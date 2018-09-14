@@ -58,11 +58,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
-        let ballNode = sceneView.scene.rootNode.childNode(withName: "ball", recursively: true)
-        ballNode?.position = SCNVector3(0, -0.7, -1)
-        ballNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        ballNode?.physicsBody?.restitution = 1
-        ballNode?.physicsBody?.applyForce(SCNVector3Make(0, 2, -2.3), asImpulse: true)
+        // create ball
+        let ball = SCNSphere(radius: 0.2)
+        let ballNode = SCNNode(geometry: ball)
+        
+        let camera = sceneView.session.currentFrame?.camera
+        let cameraTransform = camera?.transform
+        ballNode.simdTransform = cameraTransform!
+        
+        sceneView.scene.rootNode.addChildNode(ballNode)
+        
+        ballNode.position = SCNVector3(0, -0.7, -1)
+        ballNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        ballNode.physicsBody?.restitution = 1
+        ballNode.physicsBody?.applyForce(SCNVector3Make(0, 2, -2.3), asImpulse: true)
     }
 
     // MARK: - ARSCNViewDelegate
