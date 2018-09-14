@@ -24,10 +24,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/soloCup.scn")!
+        let scene = SCNScene(named: "art.scnassets/pingPongBall.scn")!
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        // ball position + physics
+        let ballNode = scene.rootNode.childNode(withName: "ball", recursively: true)
+        ballNode?.position = SCNVector3(0, 10, -5)
+        ballNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        ballNode?.physicsBody?.restitution = 1
+        
+        // floor position + physics
+        let floorNode = scene.rootNode.childNode(withName: "floor", recursively: true)
+        floorNode?.position = SCNVector3(0, -3, 0)
+        floorNode?.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
