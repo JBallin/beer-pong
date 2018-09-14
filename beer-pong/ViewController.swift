@@ -29,12 +29,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.scene = scene
         
-        // ball position + physics
-        let ballNode = scene.rootNode.childNode(withName: "ball", recursively: true)
-        ballNode?.position = SCNVector3(0, 10, -5)
-        ballNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        ballNode?.physicsBody?.restitution = 1
-        
         // floor position + physics
         let floorNode = scene.rootNode.childNode(withName: "floor", recursively: true)
         floorNode?.position = SCNVector3(0, -3, 0)
@@ -61,6 +55,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
+    }
+    
+    @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
+        let ballNode = sceneView.scene.rootNode.childNode(withName: "ball", recursively: true)
+        ballNode?.position = SCNVector3(0, -0.7, -1)
+        ballNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        ballNode?.physicsBody?.restitution = 1
+        ballNode?.physicsBody?.applyForce(SCNVector3Make(0, 2, -2.3), asImpulse: true)
     }
 
     // MARK: - ARSCNViewDelegate
