@@ -1,11 +1,3 @@
-//
-//  Ball.swift
-//  beer-pong
-//
-//  Created by Jonathan Pilovsky on 9/14/18.
-//  Copyright © 2018 Jonathan Pilovsky. All rights reserved.
-//
-
 import ARKit
 
 class Ball: SCNNode {

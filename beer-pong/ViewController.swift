@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  beer-pong
-//
-//  Created by Jonathan Pilovsky on 9/11/18.
-//  Copyright © 2018 Jonathan Pilovsky. All rights reserved.
-//
-
 import UIKit
 import SceneKit
 import ARKit

@@ -1,11 +1,3 @@
-//
-//  beer_pongTests.swift
-//  beer-pongTests
-//
-//  Created by Jonathan Pilovsky on 9/11/18.
-//  Copyright © 2018 Jonathan Pilovsky. All rights reserved.
-//
-
 import XCTest
 @testable import beer_pong
 

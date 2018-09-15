@@ -1,11 +1,3 @@
-//
-//  beer_pongUITests.swift
-//  beer-pongUITests
-//
-//  Created by Jonathan Pilovsky on 9/11/18.
-//  Copyright © 2018 Jonathan Pilovsky. All rights reserved.
-//
-
 import XCTest
 
 class beer_pongUITests: XCTestCase {
