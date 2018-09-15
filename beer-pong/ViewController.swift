@@ -13,7 +13,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/pingPongBall.scn")!
+        let scene = SCNScene(named: "art.scnassets/main.scn")!
         
         // Set the scene to the view
         sceneView.scene = scene
