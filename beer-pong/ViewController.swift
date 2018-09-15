@@ -58,25 +58,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
-        // create ball
-        let ball = SCNSphere(radius: 0.2)
-        let ballNode = SCNNode(geometry: ball)
-        
-        // position ball where camera is
+        let ball = Ball()
         let camera = sceneView.session.currentFrame?.camera
-        let cameraTransform = camera?.transform
-        ballNode.simdTransform = cameraTransform!
-        sceneView.scene.rootNode.addChildNode(ballNode)
         
-        // make the ball dynamic and have bounce
-        ballNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        ballNode.physicsBody?.restitution = 1
-        
-        // calculate and apply force
-        let forceDirection = simd_make_float4(-2, 0, -3, 0)
-        let rotation = simd_mul(cameraTransform!, forceDirection)
-        let force = SCNVector3(x: rotation.x, y: rotation.y, z: rotation.z)
-        ballNode.physicsBody?.applyForce(force, asImpulse: true)
+        ball.setPosition(camera!)
+        ball.addToRoot(sceneView)
+        ball.applyForce(camera!)
     }
 
     // MARK: - ARSCNViewDelegate

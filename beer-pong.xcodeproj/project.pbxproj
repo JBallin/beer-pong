@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9FAAE10B214C97FB00D307ED /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAAE10A214C97FB00D307ED /* Ball.swift */; };
 		9FEA0766214866630087BD74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA0765214866630087BD74 /* AppDelegate.swift */; };
 		9FEA0768214866630087BD74 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA0767214866630087BD74 /* art.scnassets */; };
 		9FEA076A214866630087BD74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA0769214866630087BD74 /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9FAAE10A214C97FB00D307ED /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		9FEA0762214866630087BD74 /* beer-pong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "beer-pong.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FEA0765214866630087BD74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FEA0767214866630087BD74 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		9FEA0764214866630087BD74 /* beer-pong */ = {
 			isa = PBXGroup;
 			children = (
+				9FAAE10A214C97FB00D307ED /* Ball.swift */,
 				9FEA0765214866630087BD74 /* AppDelegate.swift */,
 				9FEA0767214866630087BD74 /* art.scnassets */,
 				9FEA0769214866630087BD74 /* ViewController.swift */,
@@ -260,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FAAE10B214C97FB00D307ED /* Ball.swift in Sources */,
 				9FEA076A214866630087BD74 /* ViewController.swift in Sources */,
 				9FEA0766214866630087BD74 /* AppDelegate.swift in Sources */,
 			);
