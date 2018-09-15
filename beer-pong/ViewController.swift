@@ -61,7 +61,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let ball = Ball()
         let camera = sceneView.session.currentFrame?.camera
         
-        ball.setPosition(camera!)
+        ball.setPosition(sceneView)
         ball.addToRoot(sceneView)
         ball.applyForce(camera!)
     }
