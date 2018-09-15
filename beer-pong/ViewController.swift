@@ -22,6 +22,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let floorNode = scene.rootNode.childNode(withName: "floor", recursively: true)
         floorNode?.position = SCNVector3(0, -3, 0)
         floorNode?.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+
+        // lighting
+        sceneView.autoenablesDefaultLighting = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
