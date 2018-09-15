@@ -15,7 +15,7 @@ class Ball: SCNNode {
         
         self.geometry = SCNSphere(radius: 0.2)
         self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        self.physicsBody?.restitution = 1
+        self.physicsBody?.restitution = 1.6
     }
     
     required init?(coder decoder: NSCoder) {
