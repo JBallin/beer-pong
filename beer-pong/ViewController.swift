@@ -62,16 +62,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let ball = SCNSphere(radius: 0.2)
         let ballNode = SCNNode(geometry: ball)
         
+        // position ball where camera is
         let camera = sceneView.session.currentFrame?.camera
         let cameraTransform = camera?.transform
         ballNode.simdTransform = cameraTransform!
-        
         sceneView.scene.rootNode.addChildNode(ballNode)
         
-        ballNode.position = SCNVector3(0, -0.7, -1)
+        // make the ball dynamic and have bounce
         ballNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         ballNode.physicsBody?.restitution = 1
-        ballNode.physicsBody?.applyForce(SCNVector3Make(0, 2, -2.3), asImpulse: true)
+        
+        // calculate and apply force
+        let forceDirection = simd_make_float4(-2, 0, -3, 0)
+        let rotation = simd_mul(cameraTransform!, forceDirection)
+        let force = SCNVector3(x: rotation.x, y: rotation.y, z: rotation.z)
+        ballNode.physicsBody?.applyForce(force, asImpulse: true)
     }
 
     // MARK: - ARSCNViewDelegate
