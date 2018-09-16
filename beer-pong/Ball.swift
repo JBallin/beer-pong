@@ -5,7 +5,7 @@ class Ball: SCNNode {
     override init() {
         super.init()
         
-        self.geometry = SCNSphere(radius: 0.2)
+        self.geometry = SCNSphere(radius: 0.15)
         self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         self.physicsBody?.restitution = 1.6
     }
