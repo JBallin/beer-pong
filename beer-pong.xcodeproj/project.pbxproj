@@ -14,26 +14,7 @@
 		9FEA076D214866630087BD74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA076B214866630087BD74 /* Main.storyboard */; };
 		9FEA076F214866640087BD74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA076E214866640087BD74 /* Assets.xcassets */; };
 		9FEA0772214866640087BD74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA0770214866640087BD74 /* LaunchScreen.storyboard */; };
-		9FEA077D214866640087BD74 /* beer_pongTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA077C214866640087BD74 /* beer_pongTests.swift */; };
-		9FEA0788214866640087BD74 /* beer_pongUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA0787214866640087BD74 /* beer_pongUITests.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9FEA0779214866640087BD74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9FEA075A214866630087BD74 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9FEA0761214866630087BD74;
-			remoteInfo = "beer-pong";
-		};
-		9FEA0784214866640087BD74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9FEA075A214866630087BD74 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9FEA0761214866630087BD74;
-			remoteInfo = "beer-pong";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		9FAAE10A214C97FB00D307ED /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
@@ -45,30 +26,10 @@
 		9FEA076E214866640087BD74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9FEA0771214866640087BD74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9FEA0773214866640087BD74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FEA0778214866640087BD74 /* beer-pongTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "beer-pongTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9FEA077C214866640087BD74 /* beer_pongTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = beer_pongTests.swift; sourceTree = "<group>"; };
-		9FEA077E214866640087BD74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FEA0783214866640087BD74 /* beer-pongUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "beer-pongUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9FEA0787214866640087BD74 /* beer_pongUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = beer_pongUITests.swift; sourceTree = "<group>"; };
-		9FEA0789214866640087BD74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		9FEA075F214866630087BD74 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9FEA0775214866640087BD74 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9FEA0780214866640087BD74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -82,8 +43,6 @@
 			isa = PBXGroup;
 			children = (
 				9FEA0764214866630087BD74 /* beer-pong */,
-				9FEA077B214866640087BD74 /* beer-pongTests */,
-				9FEA0786214866640087BD74 /* beer-pongUITests */,
 				9FEA0763214866630087BD74 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,8 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				9FEA0762214866630087BD74 /* beer-pong.app */,
-				9FEA0778214866640087BD74 /* beer-pongTests.xctest */,
-				9FEA0783214866640087BD74 /* beer-pongUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -111,24 +68,6 @@
 				9FEA0773214866640087BD74 /* Info.plist */,
 			);
 			path = "beer-pong";
-			sourceTree = "<group>";
-		};
-		9FEA077B214866640087BD74 /* beer-pongTests */ = {
-			isa = PBXGroup;
-			children = (
-				9FEA077C214866640087BD74 /* beer_pongTests.swift */,
-				9FEA077E214866640087BD74 /* Info.plist */,
-			);
-			path = "beer-pongTests";
-			sourceTree = "<group>";
-		};
-		9FEA0786214866640087BD74 /* beer-pongUITests */ = {
-			isa = PBXGroup;
-			children = (
-				9FEA0787214866640087BD74 /* beer_pongUITests.swift */,
-				9FEA0789214866640087BD74 /* Info.plist */,
-			);
-			path = "beer-pongUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,42 +90,6 @@
 			productReference = 9FEA0762214866630087BD74 /* beer-pong.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9FEA0777214866640087BD74 /* beer-pongTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9FEA078F214866640087BD74 /* Build configuration list for PBXNativeTarget "beer-pongTests" */;
-			buildPhases = (
-				9FEA0774214866640087BD74 /* Sources */,
-				9FEA0775214866640087BD74 /* Frameworks */,
-				9FEA0776214866640087BD74 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9FEA077A214866640087BD74 /* PBXTargetDependency */,
-			);
-			name = "beer-pongTests";
-			productName = "beer-pongTests";
-			productReference = 9FEA0778214866640087BD74 /* beer-pongTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		9FEA0782214866640087BD74 /* beer-pongUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9FEA0792214866640087BD74 /* Build configuration list for PBXNativeTarget "beer-pongUITests" */;
-			buildPhases = (
-				9FEA077F214866640087BD74 /* Sources */,
-				9FEA0780214866640087BD74 /* Frameworks */,
-				9FEA0781214866640087BD74 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9FEA0785214866640087BD74 /* PBXTargetDependency */,
-			);
-			name = "beer-pongUITests";
-			productName = "beer-pongUITests";
-			productReference = 9FEA0783214866640087BD74 /* beer-pongUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -199,14 +102,6 @@
 				TargetAttributes = {
 					9FEA0761214866630087BD74 = {
 						CreatedOnToolsVersion = 9.4.1;
-					};
-					9FEA0777214866640087BD74 = {
-						CreatedOnToolsVersion = 9.4.1;
-						TestTargetID = 9FEA0761214866630087BD74;
-					};
-					9FEA0782214866640087BD74 = {
-						CreatedOnToolsVersion = 9.4.1;
-						TestTargetID = 9FEA0761214866630087BD74;
 					};
 				};
 			};
@@ -224,8 +119,6 @@
 			projectRoot = "";
 			targets = (
 				9FEA0761214866630087BD74 /* beer-pong */,
-				9FEA0777214866640087BD74 /* beer-pongTests */,
-				9FEA0782214866640087BD74 /* beer-pongUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -242,20 +135,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9FEA0776214866640087BD74 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9FEA0781214866640087BD74 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -269,36 +148,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9FEA0774214866640087BD74 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9FEA077D214866640087BD74 /* beer_pongTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9FEA077F214866640087BD74 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9FEA0788214866640087BD74 /* beer_pongUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9FEA077A214866640087BD74 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9FEA0761214866630087BD74 /* beer-pong */;
-			targetProxy = 9FEA0779214866640087BD74 /* PBXContainerItemProxy */;
-		};
-		9FEA0785214866640087BD74 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9FEA0761214866630087BD74 /* beer-pong */;
-			targetProxy = 9FEA0784214866640087BD74 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9FEA076B214866630087BD74 /* Main.storyboard */ = {
@@ -442,6 +292,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 239B54N83Q;
 				INFOPLIST_FILE = "beer-pong/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,6 +313,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 239B54N83Q;
 				INFOPLIST_FILE = "beer-pong/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -471,88 +323,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		9FEA0790214866640087BD74 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 239B54N83Q;
-				INFOPLIST_FILE = "beer-pongTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jballin.beer-pongTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/beer-pong.app/beer-pong";
-			};
-			name = Debug;
-		};
-		9FEA0791214866640087BD74 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 239B54N83Q;
-				INFOPLIST_FILE = "beer-pongTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jballin.beer-pongTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/beer-pong.app/beer-pong";
-			};
-			name = Release;
-		};
-		9FEA0793214866640087BD74 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 239B54N83Q;
-				INFOPLIST_FILE = "beer-pongUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jballin.beer-pongUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "beer-pong";
-			};
-			name = Debug;
-		};
-		9FEA0794214866640087BD74 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 239B54N83Q;
-				INFOPLIST_FILE = "beer-pongUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jballin.beer-pongUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "beer-pong";
 			};
 			name = Release;
 		};
@@ -573,24 +343,6 @@
 			buildConfigurations = (
 				9FEA078D214866640087BD74 /* Debug */,
 				9FEA078E214866640087BD74 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9FEA078F214866640087BD74 /* Build configuration list for PBXNativeTarget "beer-pongTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9FEA0790214866640087BD74 /* Debug */,
-				9FEA0791214866640087BD74 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9FEA0792214866640087BD74 /* Build configuration list for PBXNativeTarget "beer-pongUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9FEA0793214866640087BD74 /* Debug */,
-				9FEA0794214866640087BD74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
