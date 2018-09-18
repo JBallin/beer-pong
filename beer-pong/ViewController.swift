@@ -66,6 +66,33 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
+    private func placeTable(_ result: ARHitTestResult) {
+        // Get transform of result
+        let transform = result.worldTransform
+
+        // Get position from transform
+        let planePosition = SCNVector3Make(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
+
+        // Add table
+        let tableNode = createTableFromScene(planePosition)!
+        sceneView.scene.rootNode.addChildNode(tableNode)
+    }
+
+    private func createTableFromScene(_ position: SCNVector3) -> SCNNode? {
+        guard let url = Bundle.main.url(forResource: "table", withExtension: "scn", subdirectory: "art.scnassets") else {
+            NSLog("Could not find table scene")
+            return nil
+        }
+        guard let node = SCNReferenceNode(url: url) else { return nil }
+
+        node.load()
+
+        // Position scene
+        node.position = position
+
+        return node
+    }
+
     // MARK: - ARSCNViewDelegate
 
     private var planeNode: SCNNode?
