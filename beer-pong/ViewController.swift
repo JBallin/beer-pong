@@ -5,20 +5,18 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    var tablePlaced = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set the view's delegate
         sceneView.delegate = self
-        
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/main.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
 
-        // lighting
+        // Set the scene
+        sceneView.scene = SCNScene()
+
+        // Add lighting
         sceneView.autoenablesDefaultLighting = true
     }
     
