@@ -44,12 +44,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
-        let ball = Ball()
-        let camera = sceneView.session.currentFrame?.camera
-        
-        ball.setPosition(sceneView)
-        ball.addToRoot(sceneView)
-        ball.applyForce(camera!)
+        if tablePlaced == true {
+            let ball = Ball()
+            let camera = sceneView.session.currentFrame?.camera
+
+            ball.setPosition(sceneView)
+            ball.addToRoot(sceneView)
+            ball.applyForce(camera!)
+        } else {
+            // Get tap location
+            let tapLocation = sender.location(in: sceneView)
+
+            // Perform hit test
+            let results = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+
+            // If a hit was received, get position of
+            if let result = results.first {
+                placeTable(result)
+                tablePlaced = true
+            }
+        }
     }
 
     // MARK: - ARSCNViewDelegate
