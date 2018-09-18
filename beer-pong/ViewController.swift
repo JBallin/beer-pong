@@ -108,12 +108,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         tableTopNode.physicsBody = SCNPhysicsBody(type: .static, shape: tableTopShape)
         tableTopNode.physicsBody?.restitution = 1.3
 
-        /* Cup */
-        let cupNode = node.childNode(withName: "cup", recursively: true)!
-        for node in cupNode.childNodes {
-            let nodeShape = SCNPhysicsShape(node: node, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
-            node.physicsBody = SCNPhysicsBody(type: .static, shape: nodeShape)
-            node.physicsBody?.restitution = 0.1
+        /* Cups */
+        let cupsNode = node.childNode(withName: "cups", recursively: true)!
+        for cup in cupsNode.childNodes {
+            for child in cup.childNodes {
+                let childShape = SCNPhysicsShape(node: child, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
+                child.physicsBody = SCNPhysicsBody(type: .static, shape: childShape)
+                child.physicsBody?.restitution = 0.1
+            }
         }
 
         /* Floor */
