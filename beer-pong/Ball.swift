@@ -4,9 +4,10 @@ class Ball: SCNNode {
 
     override init() {
         super.init()
-        
-        self.geometry = SCNSphere(radius: 0.15)
-        self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+
+        self.geometry = SCNSphere(radius: 0.02)
+        let shape = SCNPhysicsShape(geometry: SCNSphere(radius: 0.02))
+        self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
     }
     
     required init?(coder decoder: NSCoder) {
