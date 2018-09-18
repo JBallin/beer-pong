@@ -8,6 +8,7 @@ class Ball: SCNNode {
         self.geometry = SCNSphere(radius: 0.02)
         let shape = SCNPhysicsShape(geometry: SCNSphere(radius: 0.02))
         self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        self.physicsBody?.rollingFriction = 0.05
         self.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0.6, blue: 0.2, alpha: 0.995)
     }
     
