@@ -32,7 +32,7 @@ class Ball: SCNNode {
         }
 
         let POV = sceneView.pointOfView
-        let position = SCNVector3(x: 0, y: -0.5, z: -1.0)
+        let position = SCNVector3(x: 0, y: -0.05, z: -0.2)
         updatePositionAndOrientationOf(self, withPosition: position, relativeTo: POV!)
     }
     
@@ -41,7 +41,7 @@ class Ball: SCNNode {
     }
     
     func applyForce(_ camera: ARCamera) {
-        let force = simd_make_float4(-2.5, 0, -2, 0)
+        let force = simd_make_float4(-2.2, 0, -1.0, 0)
         let rotation = simd_mul(camera.transform, force)
         let forceVector = SCNVector3(x: rotation.x, y: rotation.y, z: rotation.z)
         self.physicsBody?.applyForce(forceVector, asImpulse: true)
