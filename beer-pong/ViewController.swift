@@ -90,6 +90,39 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Position scene
         node.position = position
 
+
+        /* PHYSICS */
+
+        /* Table */
+        let tableNode = node.childNode(withName: "table", recursively: true)!
+        // legs
+        let legs = tableNode.childNodes.filter({ ($0.name?.contains("leg"))! })
+        let legShape = SCNPhysicsShape(geometry: SCNBox(width: 0.06, height: 0.67, length: 0.06, chamferRadius: 0))
+        legs.forEach { (leg) in
+            leg.physicsBody = SCNPhysicsBody(type: .static, shape: legShape)
+            leg.physicsBody?.restitution = 1.3
+        }
+        // top
+        let tableTopNode = node.childNode(withName: "top", recursively: true)!
+        let tableTopShape = SCNPhysicsShape(geometry: SCNBox(width: 1.0, height: 0.06, length: 1.5, chamferRadius: 0))
+        tableTopNode.physicsBody = SCNPhysicsBody(type: .static, shape: tableTopShape)
+        tableTopNode.physicsBody?.restitution = 1.3
+
+        /* Cup */
+        let cupNode = node.childNode(withName: "cup", recursively: true)!
+        for node in cupNode.childNodes {
+            let nodeShape = SCNPhysicsShape(node: node, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
+            node.physicsBody = SCNPhysicsBody(type: .static, shape: nodeShape)
+            node.physicsBody?.restitution = 0.1
+        }
+
+        /* Floor */
+        let floorNode = node.childNode(withName: "floor", recursively: true)
+        floorNode?.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+        floorNode?.physicsBody?.rollingFriction = 0.05
+        floorNode?.physicsBody?.restitution = 1.1
+
+
         return node
     }
 
