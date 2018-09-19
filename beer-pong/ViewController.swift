@@ -144,6 +144,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                     child.physicsBody?.restitution = 0.0
                 }
                 if child.name == "side" {
+                    child.geometry?.materials.forEach({ $0.isDoubleSided = true })
                     child.physicsBody?.restitution = 0.1
                 }
             }
