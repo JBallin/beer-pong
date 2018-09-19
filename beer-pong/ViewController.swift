@@ -45,6 +45,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
+
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        for node in (contact.nodeB.parent?.childNodes)! {
+            node.isHidden = true
+        }
+        contact.nodeA.isHidden = true
+    }
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
         if tablePlaced == true {
