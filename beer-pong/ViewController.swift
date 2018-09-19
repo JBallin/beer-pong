@@ -48,10 +48,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     // handler for collision notifications
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        for node in (contact.nodeB.parent?.childNodes)! {
-            node.isHidden = true
-        }
-        contact.nodeA.isHidden = true
+        let cupBottom = contact.nodeB
+        let cup = cupBottom.parent
+        let ball = contact.nodeA
+        ball.physicsBody?.restitution = 0.0
+
+        // fade out cup
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 0.5
+        cup?.opacity = 0.0
+        SCNTransaction.commit()
+
+        // fade out ball (longer) + hide cup & ball
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 0.75
+        ball.opacity = 0.0
+        cup?.isHidden = true
+        ball.isHidden = true
+        SCNTransaction.commit()
     }
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
