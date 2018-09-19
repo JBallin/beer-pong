@@ -2,7 +2,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     var tablePlaced = false
@@ -15,6 +15,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // Set the scene
         sceneView.scene = SCNScene()
+
+        // Add physics contact delegate for collision notifications
+        sceneView.scene.physicsWorld.contactDelegate = self
 
         // Add lighting
         sceneView.autoenablesDefaultLighting = true
