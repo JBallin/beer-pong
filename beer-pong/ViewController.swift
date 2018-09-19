@@ -139,9 +139,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             for child in cup.childNodes {
                 let childShape = SCNPhysicsShape(node: child, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
                 child.physicsBody = SCNPhysicsBody(type: .static, shape: childShape)
-                child.physicsBody?.restitution = 0.1
                 if child.name == "bottom" {
                     child.physicsBody?.contactTestBitMask = (Ball().physicsBody?.categoryBitMask)!
+                    child.physicsBody?.restitution = 0.0
+                }
+                if child.name == "side" {
+                    child.physicsBody?.restitution = 0.1
                 }
             }
         }
