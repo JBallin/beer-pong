@@ -46,6 +46,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         // Release any cached data, images, etc that aren't in use.
     }
 
+    // handler for collision notifications
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         for node in (contact.nodeB.parent?.childNodes)! {
             node.isHidden = true
