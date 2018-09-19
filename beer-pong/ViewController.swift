@@ -6,6 +6,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     @IBOutlet var sceneView: ARSCNView!
     var tablePlaced = false
+    var ballSunkSound: SCNAudioSource!
+    var sunkCups = [SCNNode]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +23,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
         // Add lighting
         sceneView.autoenablesDefaultLighting = true
+
+        // Load Sound
+        ballSunkSound = SCNAudioSource(fileNamed: "art.scnassets/sunk.wav")
+        ballSunkSound.load()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +57,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let cupBottom = contact.nodeB
         let cup = cupBottom.parent
         let ball = contact.nodeA
+        playBallSunkSound(toNode: cup!)
         ball.physicsBody?.restitution = 0.0
 
         // fade out cup
@@ -66,6 +73,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         cup?.isHidden = true
         ball.isHidden = true
         SCNTransaction.commit()
+    }
+
+    func playBallSunkSound(toNode node: SCNNode) {
+        if !sunkCups.contains(node) {
+            node.runAction(SCNAction.playAudio(ballSunkSound, waitForCompletion: true))
+            sunkCups.append(node)
+        }
     }
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
