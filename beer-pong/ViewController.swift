@@ -6,7 +6,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     var tablePlaced = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
