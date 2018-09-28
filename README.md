@@ -26,8 +26,6 @@ force based on camera orientation
 
 ### Demo
 
-Check out this [video](https://youtu.be/is4Vgu8Lexg) showing my progress (demo at end).
+<img src="demo.gif" alt="screenshot" height=300px>
 
-### Screenshot
-
-<img src="screenshot.png" alt="screenshot" height=300px>
+Check out my [progress video](https://youtu.be/is4Vgu8Lexg) (26s)!
