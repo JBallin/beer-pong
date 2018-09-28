@@ -26,7 +26,7 @@ force based on camera orientation
 
 ### Demo
 
-Check out this [video](https://youtu.be/vg0XluG4GLE) showing my progress (demo at end).
+Check out this [video](https://youtu.be/is4Vgu8Lexg) showing my progress (demo at end).
 
 ### Screenshot
 
