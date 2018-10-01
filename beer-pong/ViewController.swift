@@ -87,8 +87,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             let ball = Ball()
             let camera = sceneView.session.currentFrame?.camera
 
-            ball.setPosition(sceneView)
-            ball.addToRoot(sceneView)
+            ball.setPosition(in: sceneView)
+            ball.addTo(sceneView)
             ball.applyForce(camera!)
         } else {
             // Get tap location
