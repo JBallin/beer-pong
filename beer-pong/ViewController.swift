@@ -107,6 +107,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
                 // Run the view's session
                 sceneView.session.run(configuration)
+                let planeDetectorNode = sceneView.scene.rootNode.childNode(withName: "plane detector", recursively: true)
+                planeDetectorNode?.removeFromParentNode()
             }
         }
     }
@@ -206,6 +208,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         plane.materials = [planeMaterial]
 
         let planeNode = SCNNode(geometry: plane)
+        planeNode.name = "plane detector"
         planeNode.position = SCNVector3Make(planeAnchor.center.x, 0, planeAnchor.center.z)
 
         planeNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)
