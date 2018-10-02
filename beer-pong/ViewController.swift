@@ -53,11 +53,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     // handler for collision notifications
+    func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
+        if (sunkCups.count == 10) {
+            restartGame()
+        }
+    }
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         let cupBottom = contact.nodeB
         let cup = cupBottom.parent
         let ball = contact.nodeA
         playBallSunkSound(toNode: cup!)
+        if (!sunkCups.contains(cup!)) { sunkCups.append(cup!) }
         ball.physicsBody?.restitution = 0.0
 
         // fade out cup
@@ -75,10 +81,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         SCNTransaction.commit()
     }
 
+    private func restartGame() {
+        print("restarting game")
+        // TODO: plane nodes not showing!
+        sceneView.scene.rootNode.enumerateChildNodes() {
+            node, stop in
+            if (node.name != "plane detector") { node.removeFromParentNode() }
+            else { node.isHidden = false }
+        }
+        sunkCups = [SCNNode]()
+        tablePlaced = false
+
+        // Create a session configuration
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+
+        // Run the view's session
+        sceneView.session.run(configuration)
+    }
+
     func playBallSunkSound(toNode node: SCNNode) {
         if !sunkCups.contains(node) {
             node.runAction(SCNAction.playAudio(ballSunkSound, waitForCompletion: true))
-            sunkCups.append(node)
         }
     }
     
@@ -109,7 +133,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 sceneView.session.run(configuration)
                 sceneView.scene.rootNode.enumerateChildNodes() {
                     node, stop in
-                    if (node.name == "plane detector") { node.removeFromParentNode() }
+                    if (node.name == "plane detector") { node.isHidden = true }
                 }
             }
         }
