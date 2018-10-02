@@ -19,6 +19,7 @@ class Ball: SCNNode {
     // MARK: - UI Customization
 
     private func createPhysicalBall() {
+        self.name = "ball"
         self.geometry = SCNSphere(radius: ballRadius)
         let shape = SCNPhysicsShape(geometry: SCNSphere(radius: ballRadius))
         self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
