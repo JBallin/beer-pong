@@ -11,45 +11,38 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set the view's delegate
-        sceneView.delegate = self
-
-        // Set the scene
-        sceneView.scene = SCNScene()
-
-        // Add physics contact delegate for collision notifications
-        sceneView.scene.physicsWorld.contactDelegate = self
-
-        // Add lighting
-        sceneView.autoenablesDefaultLighting = true
-
-        // Load Sound
-        ballSunkSound = SCNAudioSource(fileNamed: "art.scnassets/sunk.wav")
-        ballSunkSound.load()
+        setScene()
+        addPhysicsContactDelegate()
+        addLighting()
+        loadSound()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-
-        // Run the view's session
-        sceneView.session.run(configuration)
+        addHorizontalPlaneDetection()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        // Pause the view's session
         sceneView.session.pause()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
+    override func didReceiveMemoryWarning() { super.didReceiveMemoryWarning() }
+
+    // Mark: - Scene
+
+    private func setScene() {
+        sceneView.delegate = self
+        sceneView.scene = SCNScene()
+    }
+
+    private func addLighting() { sceneView.autoenablesDefaultLighting = true }
+
+    private func loadSound() {
+        ballSunkSound = SCNAudioSource(fileNamed: "art.scnassets/sunk.wav")
+        ballSunkSound.load()
+    }
+
     }
 
     // handler for collision notifications
