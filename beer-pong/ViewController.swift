@@ -154,6 +154,27 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         floorNode?.physicsBody?.restitution = floorRestitutuion
     }
 
+    // MARK: - Gestures
+    
+    @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
+        if tablePlaced == true {
+            let ball = Ball()
+            let camera = sceneView.session.currentFrame?.camera
+
+            ball.setPosition(in: sceneView)
+            ball.addTo(sceneView)
+            ball.applyForce(camera!)
+        } else {
+            let tapLocation = sender.location(in: sceneView)
+            let hits = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+            if let hit = hits.first {
+                placeTable(hit)
+                tablePlaced = true
+                disablePlaneScanning()
+            }
+        }
+    }
+
 
 
         return node
