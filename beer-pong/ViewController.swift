@@ -101,6 +101,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             if let result = results.first {
                 placeTable(result)
                 tablePlaced = true
+                // Create a session configuration
+                let configuration = ARWorldTrackingConfiguration()
+                configuration.planeDetection = []
+
+                // Run the view's session
+                sceneView.session.run(configuration)
             }
         }
     }
