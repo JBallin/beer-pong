@@ -230,15 +230,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        // Create an SNCPlane on the ARPlane
-        guard let planeAnchor = anchor as? ARPlaneAnchor else {
-            return
-        }
+        let planeColor = UIColor(red: 255/255, green: 0, blue: 0, alpha: 0.5)
 
+        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
 
         let planeMaterial = SCNMaterial()
-        planeMaterial.diffuse.contents = UIColor(red: 255/255, green: 0, blue: 0, alpha: 0.5)
+        planeMaterial.diffuse.contents = planeColor
         plane.materials = [planeMaterial]
 
         let planeNode = SCNNode(geometry: plane)
@@ -250,18 +248,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         node.addChildNode(planeNode)
     }
     
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
-    }
+    func session(_ session: ARSession, didFailWithError error: Error) {}
     
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
+    func sessionWasInterrupted(_ session: ARSession) {}
     
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
-    }
+    func sessionInterruptionEnded(_ session: ARSession) {}
 }
