@@ -43,29 +43,48 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         ballSunkSound.load()
     }
 
+    // Mark: - Physics
+
+    private func addPhysicsContactDelegate() { sceneView.scene.physicsWorld.contactDelegate = self }
+
+    private func addHorizontalPlaneDetection() {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
     }
 
-    // handler for collision notifications
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         let cupBottom = contact.nodeB
-        let cup = cupBottom.parent
+        let cup = cupBottom.parent!
         let ball = contact.nodeA
-        playBallSunkSound(toNode: cup!)
+        playBallSunkSound(toNode: cup)
         ball.physicsBody?.restitution = 0.0
+        fadeOut(cup, ball)
+    }
 
-        // fade out cup
-        SCNTransaction.begin()
-        SCNTransaction.animationDuration = 0.5
-        cup?.opacity = 0.0
-        SCNTransaction.commit()
+    private func fadeOut(_ cup: SCNNode, _ ball: SCNNode) {
+        let shortFade = 0.5
+        let longFade = 0.75
 
-        // fade out ball (longer) + hide cup & ball
-        SCNTransaction.begin()
-        SCNTransaction.animationDuration = 0.75
-        ball.opacity = 0.0
-        cup?.isHidden = true
-        ball.isHidden = true
-        SCNTransaction.commit()
+        func fade(_ node: SCNNode, duration: Double) {
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = duration
+            node.opacity = 0.0
+            SCNTransaction.commit()
+        }
+
+        func hide(_ node: SCNNode) {
+            let hideTime = longFade
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = hideTime
+            node.isHidden = true
+            SCNTransaction.commit()
+        }
+
+        fade(cup, duration: shortFade)
+        fade(ball, duration: longFade)
+        hide(cup)
+        hide(ball)
     }
 
     func playBallSunkSound(toNode node: SCNNode) {
@@ -74,83 +93,40 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             sunkCups.append(node)
         }
     }
-    
-    @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
-        if tablePlaced == true {
-            let ball = Ball()
-            let camera = sceneView.session.currentFrame?.camera
 
-            ball.setPosition(in: sceneView)
-            ball.addTo(sceneView)
-            ball.applyForce(camera!)
-        } else {
-            // Get tap location
-            let tapLocation = sender.location(in: sceneView)
-
-            // Perform hit test
-            let results = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
-
-            // If a hit was received, get position of
-            if let result = results.first {
-                placeTable(result)
-                tablePlaced = true
-                // Create a session configuration
-                let configuration = ARWorldTrackingConfiguration()
-                configuration.planeDetection = []
-
-                // Run the view's session
-                sceneView.session.run(configuration)
-                sceneView.scene.rootNode.enumerateChildNodes() {
-                    node, stop in
-                    if (node.name == "plane detector") { node.removeFromParentNode() }
-                }
-            }
-        }
+    private func addPhysics(to node: SCNNode) {
+        addTablePhysics(to: node)
+        addCupsPhysics(to: node)
+        addFloorPhysics(to: node)
     }
 
-    private func placeTable(_ result: ARHitTestResult) {
-        // Get transform of result
-        let transform = result.worldTransform
+    private func addTablePhysics(to node: SCNNode) {
+        let tableRestitution = CGFloat(1.3)
+        let legThickness = CGFloat(0.06)
+        let legHeight = CGFloat(0.67)
+        let tableTopHeight = CGFloat(0.06)
+        let tableTopWidth = CGFloat(1.0)
+        let tableTopLength = CGFloat(1.5)
 
-        // Get position from transform
-        let planePosition = SCNVector3Make(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
-
-        // Add table
-        let tableNode = createTableFromScene(planePosition)!
-        sceneView.scene.rootNode.addChildNode(tableNode)
-    }
-
-    private func createTableFromScene(_ position: SCNVector3) -> SCNNode? {
-        guard let url = Bundle.main.url(forResource: "table", withExtension: "scn", subdirectory: "art.scnassets") else {
-            NSLog("Could not find table scene")
-            return nil
-        }
-        guard let node = SCNReferenceNode(url: url) else { return nil }
-
-        node.load()
-
-        // Position scene
-        node.position = position
-
-
-        /* PHYSICS */
-
-        /* Table */
         let tableNode = node.childNode(withName: "table", recursively: true)!
-        // legs
-        let legs = tableNode.childNodes.filter({ ($0.name?.contains("leg"))! })
-        let legShape = SCNPhysicsShape(geometry: SCNBox(width: 0.06, height: 0.67, length: 0.06, chamferRadius: 0))
-        legs.forEach { (leg) in
-            leg.physicsBody = SCNPhysicsBody(type: .static, shape: legShape)
-            leg.physicsBody?.restitution = 1.3
-        }
-        // top
-        let tableTopNode = node.childNode(withName: "top", recursively: true)!
-        let tableTopShape = SCNPhysicsShape(geometry: SCNBox(width: 1.0, height: 0.06, length: 1.5, chamferRadius: 0))
-        tableTopNode.physicsBody = SCNPhysicsBody(type: .static, shape: tableTopShape)
-        tableTopNode.physicsBody?.restitution = 1.3
 
-        /* Cups */
+        let legs = tableNode.childNodes.filter({ ($0.name?.contains("leg"))! })
+        let legShape = SCNPhysicsShape(geometry: SCNBox(width: legThickness, height: legHeight, length: legThickness, chamferRadius: 0))
+        legs.forEach {
+            (leg) in
+            leg.physicsBody = SCNPhysicsBody(type: .static, shape: legShape)
+            leg.physicsBody?.restitution = tableRestitution
+        }
+
+        let tableTopNode = node.childNode(withName: "top", recursively: true)!
+        let tableTopShape = SCNPhysicsShape(geometry: SCNBox(width: tableTopWidth, height: tableTopHeight, length: tableTopLength, chamferRadius: 0))
+        tableTopNode.physicsBody = SCNPhysicsBody(type: .static, shape: tableTopShape)
+        tableTopNode.physicsBody?.restitution = tableRestitution
+    }
+
+    private func addCupsPhysics(to node: SCNNode) {
+        let bottomRestitution = CGFloat(0.0)
+        let sideRestitution = CGFloat(0.1)
         let cupsNode = node.childNode(withName: "cups", recursively: true)!
         for cup in cupsNode.childNodes {
             for child in cup.childNodes {
@@ -158,20 +134,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 child.physicsBody = SCNPhysicsBody(type: .static, shape: childShape)
                 if child.name == "bottom" {
                     child.physicsBody?.contactTestBitMask = (Ball().physicsBody?.categoryBitMask)!
-                    child.physicsBody?.restitution = 0.0
+                    child.physicsBody?.restitution = bottomRestitution
                 }
                 if child.name == "side" {
                     child.geometry?.materials.forEach({ $0.isDoubleSided = true })
-                    child.physicsBody?.restitution = 0.1
+                    child.physicsBody?.restitution = sideRestitution
                 }
             }
         }
+    }
 
-        /* Floor */
+    private func addFloorPhysics(to node: SCNNode) {
+        let floorRollingFriction = CGFloat(0.05)
+        let floorRestitutuion = CGFloat(1.1)
+
         let floorNode = node.childNode(withName: "floor", recursively: true)
         floorNode?.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        floorNode?.physicsBody?.rollingFriction = 0.05
-        floorNode?.physicsBody?.restitution = 1.1
+        floorNode?.physicsBody?.rollingFriction = floorRollingFriction
+        floorNode?.physicsBody?.restitution = floorRestitutuion
+    }
+
 
 
         return node
