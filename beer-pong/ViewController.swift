@@ -175,9 +175,45 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
 
+    // MARK: - Plane Detection
 
+    private func disablePlaneScanning() {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = []
+        sceneView.session.run(configuration)
+        sceneView.scene.rootNode.enumerateChildNodes() {
+            node, stop in
+            if (node.name == "plane detector") { node.removeFromParentNode() }
+        }
 
-        return node
+    }
+
+    private func placeTable(_ hit: ARHitTestResult) {
+        let planePosition = getPlanePosition(from: hit)
+        addTable(at: planePosition)
+    }
+
+    func getPlanePosition(from hit: ARHitTestResult) -> SCNVector3 {
+        let transform = hit.worldTransform
+        return SCNVector3Make(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
+    }
+
+    private func addTable(at position: SCNVector3) {
+        let tableNode = createTableFromScene(position)!
+        sceneView.scene.rootNode.addChildNode(tableNode)
+    }
+
+    private func createTableFromScene(_ position: SCNVector3) -> SCNNode? {
+        guard let url = Bundle.main.url(forResource: "table", withExtension: "scn", subdirectory: "art.scnassets") else {
+            NSLog("Could not find table scene")
+            return nil
+        }
+        guard let tableScene = SCNReferenceNode(url: url) else { return nil }
+
+        tableScene.load()
+        tableScene.position = position
+        addPhysics(to: tableScene)
+        return tableScene
     }
 
     // MARK: - ARSCNViewDelegate
