@@ -204,7 +204,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
 
         let planeMaterial = SCNMaterial()
-        planeMaterial.diffuse.contents = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
+        planeMaterial.diffuse.contents = UIColor(red: 255/255, green: 0, blue: 0, alpha: 0.5)
         plane.materials = [planeMaterial]
 
         let planeNode = SCNNode(geometry: plane)
