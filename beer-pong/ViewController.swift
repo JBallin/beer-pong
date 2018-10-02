@@ -107,8 +107,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
                 // Run the view's session
                 sceneView.session.run(configuration)
-                let planeDetectorNode = sceneView.scene.rootNode.childNode(withName: "plane detector", recursively: true)
-                planeDetectorNode?.removeFromParentNode()
+                sceneView.scene.rootNode.enumerateChildNodes() {
+                    node, stop in
+                    if (node.name == "plane detector") { node.removeFromParentNode() }
+                }
             }
         }
     }
