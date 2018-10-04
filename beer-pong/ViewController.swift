@@ -5,9 +5,13 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    var tablePlaced = false
-    var ballSunkSound: SCNAudioSource!
-    var sunkCups = [SCNNode]()
+    private var tablePlaced = false
+    private var ballSunkSound: SCNAudioSource!
+    private var sunkCups = [SCNNode]()
+    private var planeNode: SCNNode?
+    private let planeColor = UIColor(red: 255/255, green: 0, blue: 0, alpha: 0.5)
+
+    // MARK: - Controller Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,55 +49,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     // Mark: - Physics
 
-    private func addPhysicsContactDelegate() { sceneView.scene.physicsWorld.contactDelegate = self }
-
-    private func addHorizontalPlaneDetection() {
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        sceneView.session.run(configuration)
-    }
-
-    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        let cupBottom = contact.nodeB
-        let cup = cupBottom.parent!
-        let ball = contact.nodeA
-        playBallSunkSound(toNode: cup)
-        ball.physicsBody?.restitution = 0.0
-        fadeOut(cup, ball)
-    }
-
-    private func fadeOut(_ cup: SCNNode, _ ball: SCNNode) {
-        let shortFade = 0.5
-        let longFade = 0.75
-
-        func fade(_ node: SCNNode, duration: Double) {
-            SCNTransaction.begin()
-            SCNTransaction.animationDuration = duration
-            node.opacity = 0.0
-            SCNTransaction.commit()
-        }
-
-        func hide(_ node: SCNNode) {
-            let hideTime = longFade
-            SCNTransaction.begin()
-            SCNTransaction.animationDuration = hideTime
-            node.isHidden = true
-            SCNTransaction.commit()
-        }
-
-        fade(cup, duration: shortFade)
-        fade(ball, duration: longFade)
-        hide(cup)
-        hide(ball)
-    }
-
-    func playBallSunkSound(toNode node: SCNNode) {
-        if !sunkCups.contains(node) {
-            node.runAction(SCNAction.playAudio(ballSunkSound, waitForCompletion: true))
-            sunkCups.append(node)
-        }
-    }
-
     private func addPhysics(to node: SCNNode) {
         addTablePhysics(to: node)
         addCupsPhysics(to: node)
@@ -127,6 +82,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     private func addCupsPhysics(to node: SCNNode) {
         let bottomRestitution = CGFloat(0.0)
         let sideRestitution = CGFloat(0.1)
+
         let cupsNode = node.childNode(withName: "cups", recursively: true)!
         for cup in cupsNode.childNodes {
             for child in cup.childNodes {
@@ -148,16 +104,63 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let floorRollingFriction = CGFloat(0.05)
         let floorRestitutuion = CGFloat(1.1)
 
-        let floorNode = node.childNode(withName: "floor", recursively: true)
-        floorNode?.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        floorNode?.physicsBody?.rollingFriction = floorRollingFriction
-        floorNode?.physicsBody?.restitution = floorRestitutuion
+        let floorNode = node.childNode(withName: "floor", recursively: true)!
+        floorNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+        floorNode.physicsBody?.rollingFriction = floorRollingFriction
+        floorNode.physicsBody?.restitution = floorRestitutuion
+    }
+
+    // MARK: - Collision Notifications
+
+    private func addPhysicsContactDelegate() { sceneView.scene.physicsWorld.contactDelegate = self }
+
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        let cupBottom = contact.nodeB
+        let cup = cupBottom.parent!
+        let ball = contact.nodeA
+        playBallSunkSound(toNode: cup)
+        ball.physicsBody?.restitution = 0.0
+        fadeOut(cup, ball)
+    }
+
+    // MARK: - Cup Animation & Sound
+
+    private func fadeOut(_ cup: SCNNode, _ ball: SCNNode) {
+        let shortFade = 0.5
+        let longFade = 0.75
+
+        func fade(_ node: SCNNode, duration: Double) {
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = duration
+            node.opacity = 0.0
+            SCNTransaction.commit()
+        }
+
+        func hide(_ node: SCNNode) {
+            let hideTime = longFade
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = hideTime
+            node.isHidden = true
+            SCNTransaction.commit()
+        }
+
+        fade(cup, duration: shortFade)
+        fade(ball, duration: longFade)
+        hide(cup)
+        hide(ball)
+    }
+
+    func playBallSunkSound(toNode node: SCNNode) {
+        if !sunkCups.contains(node) {
+            node.runAction(SCNAction.playAudio(ballSunkSound, waitForCompletion: true))
+            sunkCups.append(node)
+        }
     }
 
     // MARK: - Gestures
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
-        if tablePlaced == true {
+        if (tablePlaced) {
             let ball = Ball()
             let camera = sceneView.session.currentFrame?.camera
 
@@ -175,35 +178,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
 
-    // MARK: - Plane Detection
-
-    private func disablePlaneScanning() {
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = []
-        sceneView.session.run(configuration)
-        sceneView.scene.rootNode.enumerateChildNodes() {
-            node, stop in
-            if (node.name == "plane detector") { node.removeFromParentNode() }
-        }
-
-    }
+    // MARK: - Place Table
 
     private func placeTable(_ hit: ARHitTestResult) {
         let planePosition = getPlanePosition(from: hit)
-        addTable(at: planePosition)
+        addTableToScene(at: planePosition)
     }
 
-    func getPlanePosition(from hit: ARHitTestResult) -> SCNVector3 {
+    private func getPlanePosition(from hit: ARHitTestResult) -> SCNVector3 {
         let transform = hit.worldTransform
         return SCNVector3Make(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
     }
 
-    private func addTable(at position: SCNVector3) {
-        let tableNode = createTableFromScene(position)!
+    private func addTableToScene(at position: SCNVector3) {
+        let tableNode = createTableFromScene(at: position)!
         sceneView.scene.rootNode.addChildNode(tableNode)
     }
 
-    private func createTableFromScene(_ position: SCNVector3) -> SCNNode? {
+    private func createTableFromScene(at position: SCNVector3) -> SCNNode? {
         guard let url = Bundle.main.url(forResource: "table", withExtension: "scn", subdirectory: "art.scnassets") else {
             NSLog("Could not find table scene")
             return nil
@@ -216,10 +208,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         return tableScene
     }
 
-    // MARK: - ARSCNViewDelegate
+    // MARK: - Plane Detection
 
-    private var planeNode: SCNNode?
-    
+    private func addHorizontalPlaneDetection() {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
+    }
+
+    private func disablePlaneScanning() {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = []
+        sceneView.session.run(configuration)
+        sceneView.scene.rootNode.enumerateChildNodes() {
+            node, stop in
+            if (node.name == "plane detector") { node.removeFromParentNode() }
+        }
+    }
+
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         // Create an SCNNode for a detect ARPlaneAnchor
         guard let _ = anchor as? ARPlaneAnchor else {
@@ -230,8 +236,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        let planeColor = UIColor(red: 255/255, green: 0, blue: 0, alpha: 0.5)
-
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
 
