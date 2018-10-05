@@ -296,12 +296,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
         node.addChildNode(planeNode)
     }
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {}
-    
-    func sessionWasInterrupted(_ session: ARSession) {}
-    
-    func sessionInterruptionEnded(_ session: ARSession) {}
 
     // MARK: - Error Handling
 
