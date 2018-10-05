@@ -43,7 +43,9 @@ class Ball: SCNNode {
         }
     }
 
-    public func addTo(_ sceneView: ARSCNView) { sceneView.scene.rootNode.addChildNode(self) }
+    public func addTo(_ sceneView: ARSCNView) {
+        sceneView.scene.rootNode.addChildNode(self)
+    }
 
     // MARK: - Throw Ball
 
@@ -79,7 +81,11 @@ class Ball: SCNNode {
         return matrix_float4x4(referenceNode.transform)
     }
 
-    private func combine(_ transform: simd_float4x4, _ translation: matrix_float4x4) -> simd_float4x4 { return matrix_multiply(transform, translation) }
+    private func combine(_ transform: simd_float4x4, _ translation: matrix_float4x4) -> simd_float4x4 {
+        return matrix_multiply(transform, translation)
+    }
 
-    private func updateTransform(of node: SCNNode, with transform: simd_float4x4) { node.transform = SCNMatrix4(transform) }
+    private func updateTransform(of node: SCNNode, with transform: simd_float4x4) {
+        node.transform = SCNMatrix4(transform)
+    }
 }

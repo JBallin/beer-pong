@@ -40,7 +40,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.scene = SCNScene()
     }
 
-    private func addLighting() { sceneView.autoenablesDefaultLighting = true }
+    private func addLighting() {
+        sceneView.autoenablesDefaultLighting = true
+    }
 
     private func loadSound() {
         ballSunkSound = SCNAudioSource(fileNamed: "art.scnassets/sunk.wav")
@@ -139,7 +141,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     // MARK: - Collision Notifications
 
-    private func addPhysicsContactDelegate() { sceneView.scene.physicsWorld.contactDelegate = self }
+    private func addPhysicsContactDelegate() {
+        sceneView.scene.physicsWorld.contactDelegate = self
+    }
 
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         let cupBottom = contact.nodeB
@@ -267,7 +271,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.session.run(configuration)
         sceneView.scene.rootNode.enumerateChildNodes() {
             node, stop in
-            if (node.name == "plane detector") { node.removeFromParentNode() }
+            if node.name == "plane detector" {
+                node.removeFromParentNode()
+            }
         }
     }
 
@@ -281,7 +287,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {
+            return
+        }
         let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
 
         let planeMaterial = SCNMaterial()
