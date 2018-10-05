@@ -20,18 +20,26 @@ class Ball: SCNNode {
 
     private func createPhysicalBall() {
         self.name = "ball"
-        self.geometry = SCNSphere(radius: ballRadius)
-        let shape = SCNPhysicsShape(geometry: SCNSphere(radius: ballRadius))
-        self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        self.physicsBody?.rollingFriction = ballRollingFriction
-        self.geometry?.firstMaterial?.diffuse.contents = ballColor
+
+        let geometry = SCNSphere(radius: ballRadius)
+        let material = SCNMaterial()
+        material.diffuse.contents = ballColor
+        geometry.firstMaterial = material
+        self.geometry = geometry
+
+        let physicsShape = SCNPhysicsShape(geometry: geometry)
+        let physicsBody = SCNPhysicsBody(type: .dynamic, shape: physicsShape)
+        physicsBody.rollingFriction = ballRollingFriction
+        self.physicsBody = physicsBody
     }
 
     // MARK: - Add Ball to Scene
 
-    public func setPosition(in sceneView: ARSCNView) {
-        if let POV = sceneView.pointOfView {
-            updatePositionAndOrientationOf(node: self, withPosition: ballStartPosition, relativeTo: POV)
+    public func position(in sceneView: ARSCNView) {
+        if let pov = sceneView.pointOfView {
+            updatePositionAndOrientationOf(node: self, withPosition: ballStartPosition, relativeTo: pov)
+        } else {
+            ViewController().alertError(title: "Error getting point of view")
         }
     }
 
@@ -43,7 +51,11 @@ class Ball: SCNNode {
         let force = appliedForce
         let rotation = simd_mul(camera.transform, force)
         let forceVector = SCNVector3(x: rotation.x, y: rotation.y, z: rotation.z)
-        self.physicsBody?.applyForce(forceVector, asImpulse: true)
+        if let ballPhysics = self.physicsBody {
+            ballPhysics.applyForce(forceVector, asImpulse: true)
+        } else {
+            ViewController().alertError(title: "Error getting ball physics")
+        }
     }
 
     // MARK: - Calculate Position and Orientation

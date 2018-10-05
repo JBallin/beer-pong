@@ -63,40 +63,63 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let tableTopWidth = CGFloat(1.0)
         let tableTopLength = CGFloat(1.5)
 
-        let tableNode = node.childNode(withName: "table", recursively: true)!
+        if let tableNode = node.childNode(withName: "table", recursively: true) {
+            let legs = tableNode.childNodes.filter {
+                if let name = $0.name {
+                    return name.contains("leg")
+                } else {
+                    return false
+                }
+            }
+            let legGeometry = SCNBox(width: legThickness, height: legHeight, length: legThickness, chamferRadius: 0)
+            let legShape = SCNPhysicsShape(geometry: legGeometry)
+            legs.forEach {
+                let physics = SCNPhysicsBody(type: .static, shape: legShape)
+                physics.restitution = tableRestitution
+                $0.physicsBody = physics
+            }
 
-        let legs = tableNode.childNodes.filter({ ($0.name?.contains("leg"))! })
-        let legShape = SCNPhysicsShape(geometry: SCNBox(width: legThickness, height: legHeight, length: legThickness, chamferRadius: 0))
-        legs.forEach {
-            (leg) in
-            leg.physicsBody = SCNPhysicsBody(type: .static, shape: legShape)
-            leg.physicsBody?.restitution = tableRestitution
+            if let tableTopNode = node.childNode(withName: "top", recursively: true) {
+                let tableTopShape = SCNPhysicsShape(geometry: SCNBox(width: tableTopWidth, height: tableTopHeight, length: tableTopLength, chamferRadius: 0))
+                let tableTopPhysics = SCNPhysicsBody(type: .static, shape: tableTopShape)
+                tableTopPhysics.restitution = tableRestitution
+                tableTopNode.physicsBody = tableTopPhysics
+            } else {
+                alertError(title: "Error finding table-top")
+            }
+        } else {
+            alertError(title: "Error finding table")
         }
-
-        let tableTopNode = node.childNode(withName: "top", recursively: true)!
-        let tableTopShape = SCNPhysicsShape(geometry: SCNBox(width: tableTopWidth, height: tableTopHeight, length: tableTopLength, chamferRadius: 0))
-        tableTopNode.physicsBody = SCNPhysicsBody(type: .static, shape: tableTopShape)
-        tableTopNode.physicsBody?.restitution = tableRestitution
     }
 
     private func addCupsPhysics(to node: SCNNode) {
         let bottomRestitution = CGFloat(0.0)
         let sideRestitution = CGFloat(0.1)
 
-        let cupsNode = node.childNode(withName: "cups", recursively: true)!
-        for cup in cupsNode.childNodes {
-            for child in cup.childNodes {
-                let childShape = SCNPhysicsShape(node: child, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
-                child.physicsBody = SCNPhysicsBody(type: .static, shape: childShape)
-                if child.name == "bottom" {
-                    child.physicsBody?.contactTestBitMask = (Ball().physicsBody?.categoryBitMask)!
-                    child.physicsBody?.restitution = bottomRestitution
-                }
-                if child.name == "side" {
-                    child.geometry?.materials.forEach({ $0.isDoubleSided = true })
-                    child.physicsBody?.restitution = sideRestitution
+        if let cupsNode = node.childNode(withName: "cups", recursively: true) {
+            for cup in cupsNode.childNodes {
+                for child in cup.childNodes {
+                    let shapeOptions = [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]
+                    let childShape = SCNPhysicsShape(node: child, options: shapeOptions)
+                    let childPhysics = SCNPhysicsBody(type: .static, shape: childShape)
+                    if child.name == "bottom" {
+                        childPhysics.contactTestBitMask = Ball().categoryBitMask
+                        childPhysics.restitution = bottomRestitution
+                    } else if child.name == "side" {
+                        if let geometry = child.geometry {
+                            geometry.materials.forEach({ $0.isDoubleSided = true })
+                        } else {
+                            alertError(title: "Error with cup child geometry")
+                        }
+                        childPhysics.restitution = sideRestitution
+                    } else {
+                        alertError(title: "Error with cup child name")
+                    }
+                    child.physicsBody = childPhysics
                 }
             }
+        } else {
+            alertError(title: "Error finding cups")
         }
     }
 
@@ -104,10 +127,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let floorRollingFriction = CGFloat(0.05)
         let floorRestitutuion = CGFloat(1.1)
 
-        let floorNode = node.childNode(withName: "floor", recursively: true)!
-        floorNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        floorNode.physicsBody?.rollingFriction = floorRollingFriction
-        floorNode.physicsBody?.restitution = floorRestitutuion
+        if let floorNode = node.childNode(withName: "floor", recursively: true) {
+            let floorPhysics = SCNPhysicsBody(type: .static, shape: nil)
+            floorPhysics.rollingFriction = floorRollingFriction
+            floorPhysics.restitution = floorRestitutuion
+            floorNode.physicsBody = floorPhysics
+        } else {
+            alertError(title: "Error finding floor")
+        }
     }
 
     // MARK: - Collision Notifications
@@ -116,11 +143,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         let cupBottom = contact.nodeB
-        let cup = cupBottom.parent!
-        let ball = contact.nodeA
-        playBallSunkSound(toNode: cup)
-        ball.physicsBody?.restitution = 0.0
-        fadeOut(cup, ball)
+        if let cup = cupBottom.parent {
+            playBallSunkSound(toNode: cup)
+
+            let ball = contact.nodeA
+            if let ballPhysics = ball.physicsBody {
+                ballPhysics.restitution = 0.0
+            } else {
+                alertError(title: "Error loading ball physics")
+            }
+
+            fadeOut(cup, ball)
+        } else {
+            alertError(title: "Error loading cup bottom parent")
+        }
     }
 
     // MARK: - Cup Animation & Sound
@@ -162,11 +198,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
         if (tablePlaced) {
             let ball = Ball()
-            let camera = sceneView.session.currentFrame?.camera
-
-            ball.setPosition(in: sceneView)
-            ball.addTo(sceneView)
-            ball.applyForce(camera!)
+            if let currFrame = sceneView.session.currentFrame {
+                let camera = currFrame.camera
+                ball.position(in: sceneView)
+                ball.addTo(sceneView)
+                ball.applyForce(camera)
+            } else {
+                alertError(title: "Error loading current frame")
+            }
         } else {
             let tapLocation = sender.location(in: sceneView)
             let hits = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
@@ -191,16 +230,22 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     private func addTableToScene(at position: SCNVector3) {
-        let tableNode = createTableFromScene(at: position)!
-        sceneView.scene.rootNode.addChildNode(tableNode)
+        if let tableNode = createTableFromScene(at: position) {
+            sceneView.scene.rootNode.addChildNode(tableNode)
+        } else {
+            alertError(title: "Error creating table from scene")
+        }
     }
 
     private func createTableFromScene(at position: SCNVector3) -> SCNNode? {
         guard let url = Bundle.main.url(forResource: "table", withExtension: "scn", subdirectory: "art.scnassets") else {
-            NSLog("Could not find table scene")
+            alertError(title: "Error finding table scene")
             return nil
         }
-        guard let tableScene = SCNReferenceNode(url: url) else { return nil }
+        guard let tableScene = SCNReferenceNode(url: url) else {
+            alertError(title: "Error loading table scene")
+            return nil
+        }
 
         tableScene.load()
         tableScene.position = position
@@ -257,4 +302,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func sessionWasInterrupted(_ session: ARSession) {}
     
     func sessionInterruptionEnded(_ session: ARSession) {}
+
+    // MARK: - Error Handling
+
+    public func alertError(title: String) {
+        let message = "Please try restarting the app"
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
