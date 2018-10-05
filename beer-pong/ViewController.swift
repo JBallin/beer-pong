@@ -200,7 +200,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     // MARK: - Gestures
     
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
-        if (tablePlaced) {
+        if tablePlaced {
             let ball = Ball()
             if let currFrame = sceneView.session.currentFrame {
                 let camera = currFrame.camera
@@ -294,7 +294,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
         let planeMaterial = SCNMaterial()
         planeMaterial.diffuse.contents = planeColor
-        plane.materials = [planeMaterial]
+        plane.firstMaterial = planeMaterial
 
         let planeNode = SCNNode(geometry: plane)
         planeNode.name = "plane detector"

@@ -16,7 +16,7 @@ class Ball: SCNNode {
         super.init(coder: decoder)
     }
 
-    // MARK: - UI Customization
+    // MARK: - Create Ball
 
     private func createPhysicalBall() {
         self.name = "ball"
