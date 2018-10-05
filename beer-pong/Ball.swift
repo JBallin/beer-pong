@@ -61,7 +61,7 @@ class Ball: SCNNode {
     // MARK: - Calculate Position and Orientation
 
     private func updatePositionAndOrientationOf(node: SCNNode, withPosition position: SCNVector3, relativeTo referenceNode: SCNNode) {
-        let referenceNodeTransform = getTransform(for: referenceNode)
+        let referenceNodeTransform = transform(for: referenceNode)
         let translationMatrix = createTranslationMatrix(at: position)
         let translatedPositionAndOrientation = combine(referenceNodeTransform, translationMatrix)
         updateTransform(of: node, with: translatedPositionAndOrientation)
@@ -75,7 +75,9 @@ class Ball: SCNNode {
         return translationMatrix
     }
 
-    private func getTransform(for referenceNode: SCNNode) -> matrix_float4x4 { return matrix_float4x4(referenceNode.transform) }
+    private func transform(for referenceNode: SCNNode) -> matrix_float4x4 {
+        return matrix_float4x4(referenceNode.transform)
+    }
 
     private func combine(_ transform: simd_float4x4, _ translation: matrix_float4x4) -> simd_float4x4 { return matrix_multiply(transform, translation) }
 

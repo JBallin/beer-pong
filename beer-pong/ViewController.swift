@@ -15,7 +15,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScene()
+        initScene()
         addPhysicsContactDelegate()
         addLighting()
         loadSound()
@@ -35,7 +35,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     // Mark: - Scene
 
-    private func setScene() {
+    private func initScene() {
         sceneView.delegate = self
         sceneView.scene = SCNScene()
     }
@@ -220,11 +220,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     // MARK: - Place Table
 
     private func placeTable(_ hit: ARHitTestResult) {
-        let planePosition = getPlanePosition(from: hit)
+        let planePosition = calcPlanePosition(from: hit)
         addTableToScene(at: planePosition)
     }
 
-    private func getPlanePosition(from hit: ARHitTestResult) -> SCNVector3 {
+    private func calcPlanePosition(from hit: ARHitTestResult) -> SCNVector3 {
         let transform = hit.worldTransform
         return SCNVector3Make(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
     }
