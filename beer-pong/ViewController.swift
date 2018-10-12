@@ -30,8 +30,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
-    
-    override func didReceiveMemoryWarning() { super.didReceiveMemoryWarning() }
 
     // Mark: - Scene
 
