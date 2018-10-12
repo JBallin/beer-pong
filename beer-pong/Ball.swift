@@ -10,7 +10,7 @@ class Ball: SCNNode {
 
     override init() {
         super.init()
-        createPhysicalBall()
+        buildBall()
     }
     
     required init?(coder decoder: NSCoder) {
@@ -19,7 +19,7 @@ class Ball: SCNNode {
 
     // MARK: - Create Ball
 
-    private func createPhysicalBall() {
+    private func buildBall() {
         let ballName = "ball"
         self.name = ballName
 
