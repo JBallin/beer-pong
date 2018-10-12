@@ -10,6 +10,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     private var sunkCups = [SCNNode]()
     private var planeNode: SCNNode?
     private let planeColor = UIColor(red: 255/255, green: 0, blue: 0, alpha: 0.5)
+    private let planeDetectorName = "plane detector"
 
     // MARK: - Controller Lifecycle
 
@@ -43,7 +44,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     private func loadSound() {
-        ballSunkSound = SCNAudioSource(fileNamed: "art.scnassets/sunk.wav")
+        let sunkSoundPath = "art.scnassets/sunk.wav"
+        ballSunkSound = SCNAudioSource(fileNamed: sunkSoundPath)
         ballSunkSound.load()
     }
 
@@ -62,11 +64,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let tableTopHeight = CGFloat(0.06)
         let tableTopWidth = CGFloat(1.0)
         let tableTopLength = CGFloat(1.5)
+        let tableName = "table"
+        let tableTopName = "top"
+        let legName = "leg"
 
-        if let tableNode = node.childNode(withName: "table", recursively: true) {
+        if let tableNode = node.childNode(withName: tableName, recursively: true) {
             let legs = tableNode.childNodes.filter {
                 if let name = $0.name {
-                    return name.contains("leg")
+                    return name.contains(legName)
                 } else {
                     return false
                 }
@@ -79,7 +84,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 $0.physicsBody = physics
             }
 
-            if let tableTopNode = node.childNode(withName: "top", recursively: true) {
+            if let tableTopNode = node.childNode(withName: tableTopName, recursively: true) {
                 let tableTopShape = SCNPhysicsShape(geometry: SCNBox(width: tableTopWidth, height: tableTopHeight, length: tableTopLength, chamferRadius: 0))
                 let tableTopPhysics = SCNPhysicsBody(type: .static, shape: tableTopShape)
                 tableTopPhysics.restitution = tableRestitution
@@ -95,17 +100,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     private func addCupsPhysics(to node: SCNNode) {
         let bottomRestitution = CGFloat(0.0)
         let sideRestitution = CGFloat(0.1)
+        let cupsName = "cups"
+        let cupBottomName = "bottom"
+        let cupSideName = "side"
 
-        if let cupsNode = node.childNode(withName: "cups", recursively: true) {
+        if let cupsNode = node.childNode(withName: cupsName, recursively: true) {
             for cup in cupsNode.childNodes {
                 for child in cup.childNodes {
                     let shapeOptions = [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]
                     let childShape = SCNPhysicsShape(node: child, options: shapeOptions)
                     let childPhysics = SCNPhysicsBody(type: .static, shape: childShape)
-                    if child.name == "bottom" {
+                    if child.name == cupBottomName {
                         childPhysics.contactTestBitMask = Ball().categoryBitMask
                         childPhysics.restitution = bottomRestitution
-                    } else if child.name == "side" {
+                    } else if child.name == cupSideName {
                         if let geometry = child.geometry {
                             geometry.materials.forEach({ $0.isDoubleSided = true })
                         } else {
@@ -126,8 +134,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     private func addFloorPhysics(to node: SCNNode) {
         let floorRollingFriction = CGFloat(0.05)
         let floorRestitutuion = CGFloat(1.1)
+        let floorName = "floor"
 
-        if let floorNode = node.childNode(withName: "floor", recursively: true) {
+        if let floorNode = node.childNode(withName: floorName, recursively: true) {
             let floorPhysics = SCNPhysicsBody(type: .static, shape: nil)
             floorPhysics.rollingFriction = floorRollingFriction
             floorPhysics.restitution = floorRestitutuion
@@ -270,7 +279,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.session.run(configuration)
         sceneView.scene.rootNode.enumerateChildNodes() {
             node, stop in
-            if node.name == "plane detector" {
+            if node.name == planeDetectorName {
                 node.removeFromParentNode()
             }
         }
@@ -296,7 +305,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         plane.firstMaterial = planeMaterial
 
         let planeNode = SCNNode(geometry: plane)
-        planeNode.name = "plane detector"
+        planeNode.name = planeDetectorName
         planeNode.position = SCNVector3Make(planeAnchor.center.x, 0, planeAnchor.center.z)
 
         planeNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)

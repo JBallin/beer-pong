@@ -20,7 +20,8 @@ class Ball: SCNNode {
     // MARK: - Create Ball
 
     private func createPhysicalBall() {
-        self.name = "ball"
+        let ballName = "ball"
+        self.name = ballName
 
         let geometry = SCNSphere(radius: ballRadius)
         let material = SCNMaterial()
