@@ -6,6 +6,7 @@ class Ball: SCNNode {
     private let ballRollingFriction = CGFloat(0.05)
     private let ballStartPosition = SCNVector3(x: 0, y: -0.05, z: -0.2)
     private let appliedForce = simd_make_float4(-2.2, 0, -1.0, 0)
+    weak var hostViewController: ViewController?
 
     override init() {
         super.init()
@@ -38,8 +39,8 @@ class Ball: SCNNode {
     public func position(in sceneView: ARSCNView) {
         if let pov = sceneView.pointOfView {
             updatePositionAndOrientationOf(node: self, withPosition: ballStartPosition, relativeTo: pov)
-        } else {
-            ViewController().alertError(title: "Error getting point of view")
+        } else if let host = self.hostViewController {
+            host.alertError(title: "Error getting point of view")
         }
     }
 
@@ -55,8 +56,8 @@ class Ball: SCNNode {
         let forceVector = SCNVector3(x: rotation.x, y: rotation.y, z: rotation.z)
         if let ballPhysics = self.physicsBody {
             ballPhysics.applyForce(forceVector, asImpulse: true)
-        } else {
-            ViewController().alertError(title: "Error getting ball physics")
+        } else if let host = self.hostViewController {
+            host.alertError(title: "Error getting ball physics")
         }
     }
 

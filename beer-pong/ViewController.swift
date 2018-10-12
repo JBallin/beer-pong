@@ -202,6 +202,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     @IBAction func onViewTapped(_ sender: UITapGestureRecognizer) {
         if tablePlaced {
             let ball = Ball()
+            ball.hostViewController = self
             if let currFrame = sceneView.session.currentFrame {
                 let camera = currFrame.camera
                 ball.position(in: sceneView)
