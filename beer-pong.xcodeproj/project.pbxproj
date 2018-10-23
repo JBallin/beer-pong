@@ -7,21 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F56AA37217E8ABE00F3F970 /* screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F56AA36217E8ABE00F3F970 /* screenshot.png */; };
 		9FAAE10B214C97FB00D307ED /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAAE10A214C97FB00D307ED /* Ball.swift */; };
 		9FEA0766214866630087BD74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA0765214866630087BD74 /* AppDelegate.swift */; };
 		9FEA0768214866630087BD74 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA0767214866630087BD74 /* art.scnassets */; };
-		9FEA076A214866630087BD74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA0769214866630087BD74 /* ViewController.swift */; };
+		9FEA076A214866630087BD74 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA0769214866630087BD74 /* ARViewController.swift */; };
 		9FEA076D214866630087BD74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA076B214866630087BD74 /* Main.storyboard */; };
 		9FEA076F214866640087BD74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA076E214866640087BD74 /* Assets.xcassets */; };
 		9FEA0772214866640087BD74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FEA0770214866640087BD74 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F56AA36217E8ABE00F3F970 /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = screenshot.png; path = ../../../../Documents/Galvanize/Presentations/iOS/Other/Assets/screenshot.png; sourceTree = "<group>"; };
 		9FAAE10A214C97FB00D307ED /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		9FEA0762214866630087BD74 /* beer-pong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "beer-pong.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FEA0765214866630087BD74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FEA0767214866630087BD74 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		9FEA0769214866630087BD74 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9FEA0769214866630087BD74 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		9FEA076C214866630087BD74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9FEA076E214866640087BD74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9FEA0771214866640087BD74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,11 +63,12 @@
 				9FAAE10A214C97FB00D307ED /* Ball.swift */,
 				9FEA0765214866630087BD74 /* AppDelegate.swift */,
 				9FEA0767214866630087BD74 /* art.scnassets */,
-				9FEA0769214866630087BD74 /* ViewController.swift */,
+				9FEA0769214866630087BD74 /* ARViewController.swift */,
 				9FEA076B214866630087BD74 /* Main.storyboard */,
 				9FEA076E214866640087BD74 /* Assets.xcassets */,
 				9FEA0770214866640087BD74 /* LaunchScreen.storyboard */,
 				9FEA0773214866640087BD74 /* Info.plist */,
+				9F56AA36217E8ABE00F3F970 /* screenshot.png */,
 			);
 			path = "beer-pong";
 			sourceTree = "<group>";
@@ -133,6 +136,7 @@
 				9FEA0772214866640087BD74 /* LaunchScreen.storyboard in Resources */,
 				9FEA076F214866640087BD74 /* Assets.xcassets in Resources */,
 				9FEA076D214866630087BD74 /* Main.storyboard in Resources */,
+				9F56AA37217E8ABE00F3F970 /* screenshot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FAAE10B214C97FB00D307ED /* Ball.swift in Sources */,
-				9FEA076A214866630087BD74 /* ViewController.swift in Sources */,
+				9FEA076A214866630087BD74 /* ARViewController.swift in Sources */,
 				9FEA0766214866630087BD74 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
