@@ -6,6 +6,11 @@ I've been fascinated with Virtual and Augmented reality since the early days, so
 ### Description
 In this game, you can place a realistically sized table on the floor and toss balls into cups until they all disappear. This involved building 3D objects both directly and with code, including physics (static vs. dynamic, force, friction, restitution etc.) and geometry (x, y, z coordinates, shapes, sizing).
 
+### Demo (GIF)
+<img src="demo.gif" alt="screenshot" height=300px>
+<br>
+Also: Check out my [progress video](https://youtu.be/is4Vgu8Lexg) (26s)
+
 ### Tech
 Built in Swift (iOS) using Xcode (Apple IDE), utilizing the following Apple frameworks:
 
@@ -19,8 +24,3 @@ Built in Swift (iOS) using Xcode (Apple IDE), utilizing the following Apple fram
 * Working with physics, geometry, 3D design, realistic sizing, apply
 force based on camera orientation
 * Plane detection, Hit Tests, Collision Tests
-
-### Demo (GIF)
-<img src="demo.gif" alt="screenshot" height=300px>
-<br>
-Also: Check out my [progress video](https://youtu.be/is4Vgu8Lexg) (26s)
