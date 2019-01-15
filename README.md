@@ -8,7 +8,7 @@ In this game, you can place a realistically sized table on the floor and toss ba
 
 ### Demo (GIF)
 <img src="demo.gif" alt="screenshot" height=300px>
-<br>
+
 Also: Check out my [progress video](https://youtu.be/is4Vgu8Lexg) (26s)
 
 ### Tech
