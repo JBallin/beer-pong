@@ -24,7 +24,7 @@ Built in Swift (iOS) using Xcode (Apple IDE), utilizing the following Apple fram
 force based on camera orientation
 * Plane detection, Hit Tests, Collision Tests
 
-### Demo
+### Demo (GIF)
 
 <img src="demo.gif" alt="screenshot" height=300px>
 
