@@ -1,3 +1,5 @@
+# AR Beer Pong
+
 ## Background
 For my final project at Galvanize's Web Development Immersive I needed to choose a new language; naturally I chose Swift given my Apple [fanaticism](https://apple.stackexchange.com/users/151404/jballin).
 
